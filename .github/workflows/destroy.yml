@@ -1,4 +1,4 @@
-name: Destroy GKE Cluster
+name: Destroy GCP VM
 
 on:
   workflow_dispatch:
@@ -18,7 +18,10 @@ jobs:
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
         run: |
+          echo "${GOOGLE_CREDENTIALS}" > credentials.json
+          export GOOGLE_APPLICATION_CREDENTIALS="credentials.json"
           terraform init
           terraform destroy -auto-approve \
             -var="project_id=${{ secrets.GCP_PROJECT_ID }}" \
-            -var="region=us-central1"
+            -var="region=us-central1" \
+            -var="zone=us-central1-a"
