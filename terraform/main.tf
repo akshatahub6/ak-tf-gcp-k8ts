@@ -1,14 +1,22 @@
 provider "google" {
   project = var.project_id
   region  = var.region
+  zone    = var.zone
 }
 
-resource "google_container_cluster" "demo" {
-  name     = "demo-cluster"
-  location = var.region
-  initial_node_count = 1
+resource "google_compute_instance" "vm_instance" {
+  name         = "demo-vm"
+  machine_type = "e2-medium"
+  zone         = var.zone
 
-  node_config {
-    machine_type = "e2-medium"
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-11"
+    }
+  }
+
+  network_interface {
+    network = "default"
+    access_config {}
   }
 }
