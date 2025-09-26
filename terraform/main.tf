@@ -12,7 +12,7 @@ provider "google" {
 }
 
 resource "google_compute_instance" "vm_instance" {
-  name         = "demo-vm7"
+  name         = "demo-vm66"
   machine_type = "e2-medium"
   zone         = var.zone
 
